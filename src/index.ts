@@ -39,7 +39,7 @@ import { promptDefinitions, getPromptMessages } from './prompts/index.js';
 const server = new Server(
   {
     name: 'squirex',
-    version: '1.0.0',
+    version: '1.0.1',
   },
   {
     capabilities: {
@@ -135,7 +135,7 @@ async function main(): Promise<void> {
   await server.connect(transport);
 
   // Log to stderr (not stdout — stdout is reserved for MCP protocol)
-  console.error('SquireX MCP Server v1.0.0');
+  console.error('SquireX MCP Server v1.0.1');
   console.error(`Agentforce Capability Scanner: 26 rules across 9 categories`);
   console.error(`Tools: ${allTools.length} | Resources: ${resourceDefinitions.length} | Prompts: ${promptDefinitions.length}`);
   console.error(`Project dir: ${process.env['SQUIREX_PROJECT_DIR'] || process.cwd()}`);

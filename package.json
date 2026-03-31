@@ -1,6 +1,6 @@
 {
   "name": "@squirex.dev/mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SquireX MCP Server — Agentforce Capability Scanner for AI Coding Agents",
   "type": "module",
   "main": "dist/index.js",
