@@ -18,7 +18,7 @@ Salesforce Agentforce agents use LLMs to autonomously execute Apex, Flows, and e
 - 🔴 **Privilege Escalation** — Actions running in system context without sharing
 - 🟠 **Supply Chain** — Stale API versions that silently skip metadata types
 
-SquireX scans your Agentforce metadata with **26 SAST rules across 9 categories** and integrates directly into your AI coding workflow.
+SquireX scans your Agentforce metadata with **rules across 9 categories** and integrates directly into your AI coding workflow.
 
 ---
 
@@ -52,7 +52,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `scan_agentforce` | Run all 26 SAST rules against the project. Returns SARIF. |
+| `scan_agentforce` | Run all rules against the project. Returns SARIF. |
 | `scan_agentforce_file` | Scan a single metadata file (`.genAiFunction-meta.xml`, `.agent`, etc.) |
 | `scan_agentforce_rule` | Run a specific rule (e.g., `AGENTFORCE-1.1`) |
 
@@ -60,7 +60,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `list_scan_rules` | List all 26 rules with ID, category, severity |
+| `list_scan_rules` | List all rules with ID, category, severity |
 | `get_rule_details` | Deep dive: description + remediation guidance |
 | `explain_violation` | Root-cause analysis for a specific violation |
 | `suggest_fix` | Generate a code/metadata fix suggestion |
@@ -88,7 +88,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | URI | Description |
 |-----|-------------|
-| `squirex://scan/rules` | Complete 26-rule catalog |
+| `squirex://scan/rules` | Complete catalog |
 | `squirex://scan/rules/{id}` | Rule detail with remediation |
 | `squirex://scan/results/latest` | Latest scan results (SARIF) |
 | `squirex://schema/objects` | Inferred SObject schema |
@@ -99,14 +99,14 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Prompt | What It Does |
 |--------|-------------|
-| `review-agentforce-security` | Full 26-rule scan → prioritized remediation plan |
+| `review-agentforce-security` | Full rule scan → prioritized remediation plan |
 | `fix-agentforce-violation` | Diagnose + fix a specific violation |
 | `harden-agent-metadata` | Proactive defense-in-depth review |
 | `generate-test-evaluation` | Generate Agentforce DX test YAML specs for Testing Center |
 
 ---
 
-## Agentforce Capability Scanner — 26 Rules
+## Agentforce Capability Scanner — Rules
 
 | # | Category | Rules | Severity |
 |---|----------|-------|----------|
@@ -158,7 +158,7 @@ AI Coding Agent (Claude / Gemini / Copilot)
 ┌─────────────────────┐
 │   squireinterp       │
 │   Go Execution Engine│
-│   26 SAST Rules      │
+│   Rules      │
 └─────────────────────┘
 ```
 
@@ -174,12 +174,12 @@ AI Coding Agent (Claude / Gemini / Copilot)
 
 ## GitHub App Integration
 
-For automated PR scanning, install the [SquireX GitHub App](https://github.com/apps/squirex) — one-click setup, 26-rule scan on every pull request, SARIF in your Security tab.
+For automated PR scanning, install the [SquireX GitHub App](https://github.com/apps/squirex) — one-click setup, rule scan on every pull request, SARIF in your Security tab.
 
 | Plan | Public Repos | Private Repos | Price |
 |------|-------------|---------------|-------|
 | Free | Unlimited | — | $0 |
-| Enterprise | Unlimited | Unlimited | $1,000/repo/year |
+| Enterprise | Unlimited | Unlimited | Contact hello@squirex.dev|
 
 ---
 
