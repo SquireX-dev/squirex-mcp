@@ -1,8 +1,8 @@
-# @squirex/mcp-server
+# @squirex.dev/mcp-server
 
 > **SquireX MCP Server** — Agentforce Capability Scanner for AI Coding Agents
 
-[![npm version](https://img.shields.io/npm/v/@squirex/mcp-server.svg)](https://www.npmjs.com/package/@squirex/mcp-server)
+[![npm version](https://img.shields.io/npm/v/@squirex.dev/mcp-server.svg)](https://www.npmjs.com/package/@squirex.dev/mcp-server)
 [![License](https://img.shields.io/badge/license-proprietary-blue.svg)](LICENSE.md)
 
 Model Context Protocol server exposing the SquireX Agentforce Capability Scanner to AI-powered developer tools. Works with **Claude Code**, **Gemini**, **GitHub Copilot**, and any MCP-compatible IDE.
@@ -31,7 +31,7 @@ Add to your AI IDE configuration (Claude Code, Gemini, VS Code, JetBrains):
   "mcpServers": {
     "squirex": {
       "command": "npx",
-      "args": ["-y", "@squirex/mcp-server"],
+      "args": ["-y", "@squirex.dev/mcp-server"],
       "env": {
         "SQUIREX_PROJECT_DIR": "/path/to/your/salesforce/project"
       }
@@ -46,7 +46,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 ## MCP Surface
 
-### Tools (12)
+### Tools (16)
 
 #### Core Scanning (Primary Value)
 
@@ -74,6 +74,15 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 | `analyze_schema` | Aggregate inferred SObject schema from the codebase |
 | `predict_conflicts` | Predict merge conflicts between branches |
 | `generate_sarif_report` | Generate SARIF for CI/CD pipeline integration |
+
+#### Testing Center Bridge
+
+| Tool | Description |
+|------|-------------|
+| `generate_dx_tests` | Convert scan violations → Agentforce DX test YAML for Testing Center |
+| `validate_dx_tests` | Validate DX test spec syntax and schema |
+| `push_to_testing_center` | Push test spec to Salesforce via `sf agent test run` |
+| `get_testing_center_results` | Get status/results of a Testing Center test run |
 
 ### Resources (6)
 
@@ -135,10 +144,10 @@ AI Coding Agent (Claude / Gemini / Copilot)
         │ MCP Protocol (stdio)
         ▼
 ┌─────────────────────┐
-│  @squirex/mcp-server │ ← This package
-│  12 tools, 6 resources│
-│  4 prompts            │
-└───────┬─────────────┘
+│ @squirex.dev/mcp-server│ ← This package
+│  16 tools, 6 resources │
+│  4 prompts             │
+└───────┬────────────────┘
         │ spawn
         ▼
 ┌─────────────────────┐
