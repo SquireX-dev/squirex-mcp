@@ -1,0 +1,82 @@
+# SquireX MCP Server CI/CD
+#
+# Runs on the squirex-mcp public repo.
+# Tests the MCP server build and publishes to npm on tagged releases.
+
+name: MCP Server CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Type Check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify Output
+        run: |
+          test -f dist/index.js || (echo "Missing dist/index.js" && exit 1)
+          test -f dist/executor.js || (echo "Missing dist/executor.js" && exit 1)
+          test -f dist/rules-registry.js || (echo "Missing dist/rules-registry.js" && exit 1)
+          echo "✅ All expected output files present"
+
+      - name: Verify Rule Count
+        run: |
+          RULE_COUNT=$(node -e "
+            const { getAllRules } = require('./dist/rules-registry.js');
+            console.log(getAllRules().length);
+          ")
+          if [ "$RULE_COUNT" != "26" ]; then
+            echo "❌ Expected 26 rules, got $RULE_COUNT"
+            exit 1
+          fi
+          echo "✅ 26 Agentforce SAST rules verified"
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,33 @@
+{
+  "name": "@squirex/mcp-server",
+  "version": "1.0.0",
+  "description": "SquireX MCP Server — Agentforce Capability Scanner for AI Coding Agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "squirex-mcp": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "salesforce",
+    "agentforce",
+    "sast",
+    "security",
+    "ai-agent",
+    "capability-scanner"
+  ],
+  "author": "SquireX",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

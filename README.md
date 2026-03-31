@@ -1,0 +1,185 @@
+# @squirex/mcp-server
+
+> **SquireX MCP Server** — Agentforce Capability Scanner for AI Coding Agents
+
+[![npm version](https://img.shields.io/npm/v/@squirex/mcp-server.svg)](https://www.npmjs.com/package/@squirex/mcp-server)
+[![License](https://img.shields.io/badge/license-proprietary-blue.svg)](LICENSE.md)
+
+Model Context Protocol server exposing the SquireX Agentforce Capability Scanner to AI-powered developer tools. Works with **Claude Code**, **Gemini**, **GitHub Copilot**, and any MCP-compatible IDE.
+
+---
+
+## Why SquireX?
+
+Salesforce Agentforce agents use LLMs to autonomously execute Apex, Flows, and external services. Without guardrails, this creates **OWASP LLM Top 10** vulnerabilities:
+
+- 🔴 **Excessive Agency** — Agents that modify data without user confirmation
+- 🔴 **Prompt Injection** — User input that hijacks agent instructions
+- 🔴 **Privilege Escalation** — Actions running in system context without sharing
+- 🟠 **Supply Chain** — Stale API versions that silently skip metadata types
+
+SquireX scans your Agentforce metadata with **26 SAST rules across 9 categories** and integrates directly into your AI coding workflow.
+
+---
+
+## Quick Start
+
+Add to your AI IDE configuration (Claude Code, Gemini, VS Code, JetBrains):
+
+```json
+{
+  "mcpServers": {
+    "squirex": {
+      "command": "npx",
+      "args": ["-y", "@squirex/mcp-server"],
+      "env": {
+        "SQUIREX_PROJECT_DIR": "/path/to/your/salesforce/project"
+      }
+    }
+  }
+}
+```
+
+That's it. Your AI agent now has access to the Agentforce Capability Scanner.
+
+---
+
+## MCP Surface
+
+### Tools (12)
+
+#### Core Scanning (Primary Value)
+
+| Tool | Description |
+|------|-------------|
+| `scan_agentforce` | Run all 26 SAST rules against the project. Returns SARIF. |
+| `scan_agentforce_file` | Scan a single metadata file (`.genAiFunction-meta.xml`, `.agent`, etc.) |
+| `scan_agentforce_rule` | Run a specific rule (e.g., `AGENTFORCE-1.1`) |
+
+#### Rule Intelligence
+
+| Tool | Description |
+|------|-------------|
+| `list_scan_rules` | List all 26 rules with ID, category, severity |
+| `get_rule_details` | Deep dive: description + remediation guidance |
+| `explain_violation` | Root-cause analysis for a specific violation |
+| `suggest_fix` | Generate a code/metadata fix suggestion |
+
+#### Apex Testing & Schema
+
+| Tool | Description |
+|------|-------------|
+| `run_tests` | Execute Apex tests locally using the Go interpreter |
+| `get_coverage` | Extract line-level code coverage data |
+| `analyze_schema` | Aggregate inferred SObject schema from the codebase |
+| `predict_conflicts` | Predict merge conflicts between branches |
+| `generate_sarif_report` | Generate SARIF for CI/CD pipeline integration |
+
+### Resources (6)
+
+| URI | Description |
+|-----|-------------|
+| `squirex://scan/rules` | Complete 26-rule catalog |
+| `squirex://scan/rules/{id}` | Rule detail with remediation |
+| `squirex://scan/results/latest` | Latest scan results (SARIF) |
+| `squirex://schema/objects` | Inferred SObject schema |
+| `squirex://test-results/latest` | Latest Apex test results |
+| `squirex://coverage/latest` | Latest code coverage |
+
+### Prompts (4)
+
+| Prompt | What It Does |
+|--------|-------------|
+| `review-agentforce-security` | Full 26-rule scan → prioritized remediation plan |
+| `fix-agentforce-violation` | Diagnose + fix a specific violation |
+| `harden-agent-metadata` | Proactive defense-in-depth review |
+| `generate-test-evaluation` | Generate Agentforce DX test YAML specs for Testing Center |
+
+---
+
+## Agentforce Capability Scanner — 26 Rules
+
+| # | Category | Rules | Severity |
+|---|----------|-------|----------|
+| 1 | **Action Configuration** | Mandatory Confirmation, Schema Sync, Privilege Analysis | 🔴 Critical / 🟠 High |
+| 2 | **Agent Script Safety** | Validation Guards, Transition Integrity, Prompt Injection Defense | 🔴 Critical / 🟠 High |
+| 3 | **Grounding Security** | Hardcoded Secrets, FLS Masking Alignment | 🔴 Critical / 🟠 High |
+| 4 | **Structural Dependency** | Planner Completeness, Deactivation Collision, Evaluation Governance | 🟠 High / 🟡 Medium |
+| 5 | **Extended Graph Security** | Flow Context/Silent State/Injection, API Injection, PT Poisoning/Activation | 🔴 Critical / 🟠 High |
+| 6 | **Supply Chain Security** | API Downgrade, Schema Desync, Managed Package Origin | 🟠 High / 🟡 Medium |
+| 7 | **Agentic Architecture** | Topic Bloat, Skill Semantics, Context Traversal | 🟠 High / 🟡 Medium |
+| 8 | **Instruction Integrity** | Metadata Instruction Poisoning, Cross-Topic Boundary | 🔴 Critical / 🟠 High |
+| 9 | **Operational Reliability** | Validation Conflict | 🟡 Medium |
+
+---
+
+## Supported Metadata Types
+
+- `.genAiFunction-meta.xml`
+- `.genAiPlugin-meta.xml`
+- `.genAiPlannerBundle-meta.xml`
+- `.genAiPromptTemplate-meta.xml`
+- `.genAiPromptTemplateActv-meta.xml`
+- `.agent` files
+- `.cls` (Apex classes)
+- `.trigger` (Apex triggers)
+- `schema.json`
+
+---
+
+## How It Works
+
+```
+AI Coding Agent (Claude / Gemini / Copilot)
+        │
+        │ MCP Protocol (stdio)
+        ▼
+┌─────────────────────┐
+│  @squirex/mcp-server │ ← This package
+│  12 tools, 6 resources│
+│  4 prompts            │
+└───────┬─────────────┘
+        │ spawn
+        ▼
+┌─────────────────────┐
+│   squirex CLI        │
+└───────┬─────────────┘
+        │ JSON IPC
+        ▼
+┌─────────────────────┐
+│   squireinterp       │
+│   Go Execution Engine│
+│   26 SAST Rules      │
+└─────────────────────┘
+```
+
+---
+
+## Requirements
+
+- Node.js ≥ 18
+- `squirex` CLI installed (or available via npx)
+- A Salesforce project with Agentforce metadata
+
+---
+
+## GitHub App Integration
+
+For automated PR scanning, install the [SquireX GitHub App](https://github.com/apps/squirex) — one-click setup, 26-rule scan on every pull request, SARIF in your Security tab.
+
+| Plan | Public Repos | Private Repos | Price |
+|------|-------------|---------------|-------|
+| Free | Unlimited | — | $0 |
+| Enterprise | Unlimited | Unlimited | $1,000/repo/year |
+
+---
+
+## License
+
+Proprietary — See [LICENSE.md](LICENSE.md)
+
+Copyright © 2026 SquireX. All Rights Reserved.
+
+---
+
+<sub>⚡ Built by <a href="https://squirex.dev">SquireX</a> — Securing the AI Agent Pipeline</sub>
