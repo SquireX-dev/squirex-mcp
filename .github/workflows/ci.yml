@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Type Check
-        run: npx tsc --noEmit
+        run: ./node_modules/.bin/tsc --noEmit
 
       - name: Build
         run: npm run build
@@ -45,8 +45,8 @@ jobs:
 
       - name: Verify Rule Count
         run: |
-          RULE_COUNT=$(node -e "
-            const { getAllRules } = require('./dist/rules-registry.js');
+          RULE_COUNT=$(node --input-type=module -e "
+            import { getAllRules } from './dist/rules-registry.js';
             console.log(getAllRules().length);
           ")
           if [ "$RULE_COUNT" != "26" ]; then
