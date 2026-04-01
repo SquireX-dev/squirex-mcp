@@ -186,3 +186,15 @@ export async function executeConflictPrediction(
   const args = ['conflict', '-b', branches, '--format', 'json', ...conflictArgs];
   return executeCliCommand(args, options);
 }
+
+/**
+ * Execute generate-tests command for Testing Center bridge.
+ * Delegates to the core CLI's `squirex generate-tests` command.
+ */
+export async function executeGenerateTests(
+  genArgs: string[] = [],
+  options: ExecutorOptions = {}
+): Promise<ExecutorResult> {
+  const args = ['generate-tests', '--json', ...genArgs];
+  return executeCliCommand(args, options);
+}
