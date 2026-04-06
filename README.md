@@ -18,7 +18,7 @@ Salesforce Agentforce agents use LLMs to autonomously execute Apex, Flows, and e
 - 🔴 **Privilege Escalation** — Actions running in system context without sharing
 - 🟠 **Supply Chain** — Stale API versions that silently skip metadata types
 
-SquireX scans your Agentforce metadata with **26 SAST rules across 9 categories** and integrates directly into your AI coding workflow.
+SquireX scans your Agentforce metadata with **51+ SAST rules across 19 categories** and integrates directly into your AI coding workflow.
 
 ---
 
@@ -52,7 +52,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `scan_agentforce` | Run all 26 SAST rules against the project. Returns SARIF. |
+| `scan_agentforce` | Run all 51+ SAST rules against the project. Returns SARIF. |
 | `scan_agentforce_file` | Scan a single metadata file (`.genAiFunction-meta.xml`, `.agent`, etc.) |
 | `scan_agentforce_rule` | Run a specific rule (e.g., `AGENTFORCE-1.1`) |
 
@@ -60,7 +60,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `list_scan_rules` | List all 26 rules with ID, category, severity |
+| `list_scan_rules` | List all 51+ rules with ID, category, severity |
 | `get_rule_details` | Deep dive: description + remediation guidance |
 | `explain_violation` | Root-cause analysis for a specific violation |
 | `suggest_fix` | Generate a code/metadata fix suggestion |
@@ -88,7 +88,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | URI | Description |
 |-----|-------------|
-| `squirex://scan/rules` | Complete 26-rule catalog |
+| `squirex://scan/rules` | Complete 51+ rule catalog |
 | `squirex://scan/rules/{id}` | Rule detail with remediation |
 | `squirex://scan/results/latest` | Latest scan results (SARIF) |
 | `squirex://schema/objects` | Inferred SObject schema |
@@ -99,14 +99,14 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Prompt | What It Does |
 |--------|-------------|
-| `review-agentforce-security` | Full 26-rule scan → prioritized remediation plan |
+| `review-agentforce-security` | Full 51+ rule scan → prioritized remediation plan |
 | `fix-agentforce-violation` | Diagnose + fix a specific violation |
 | `harden-agent-metadata` | Proactive defense-in-depth review |
 | `generate-test-evaluation` | Generate Agentforce DX test YAML specs for Testing Center |
 
 ---
 
-## Agentforce Capability Scanner — 26 Rules
+## Agentforce Capability Scanner — 51+ Rules
 
 | # | Category | Rules | Severity |
 |---|----------|-------|----------|
@@ -114,11 +114,22 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 | 2 | **Agent Script Safety** | Validation Guards, Transition Integrity, Prompt Injection Defense | 🔴 Critical / 🟠 High |
 | 3 | **Grounding Security** | Hardcoded Secrets, FLS Masking Alignment | 🔴 Critical / 🟠 High |
 | 4 | **Structural Dependency** | Planner Completeness, Deactivation Collision, Evaluation Governance | 🟠 High / 🟡 Medium |
-| 5 | **Extended Graph Security** | Flow Context/Silent State/Injection, API Injection, PT Poisoning/Activation | 🔴 Critical / 🟠 High |
+| 5 | **Flow Security** | Flow Context/Silent State/Injection, API Injection, PT Poisoning/Activation | 🔴 Critical / 🟠 High |
 | 6 | **Supply Chain Security** | API Downgrade, Schema Desync, Managed Package Origin | 🟠 High / 🟡 Medium |
-| 7 | **Agentic Architecture** | Topic Bloat, Skill Semantics, Context Traversal | 🟠 High / 🟡 Medium |
-| 8 | **Instruction Integrity** | Metadata Instruction Poisoning, Cross-Topic Boundary | 🔴 Critical / 🟠 High |
-| 9 | **Operational Reliability** | Validation Conflict | 🟡 Medium |
+| 7 | **Agentic Architecture** | Topic Bloat, Skill Semantics, Orphaned Bot Evaluation | 🟠 High / 🟡 Medium |
+| 9 | **Instruction Integrity** | Metadata Instruction Poisoning, Cross-Topic Boundary | 🔴 Critical / 🟠 High |
+| 10 | **Operational Reliability** | Validation Conflict | 🟡 Medium |
+| 11 | **Autonomous Scheduling** | Unguarded Scheduled Action, Time-Window Privilege Drift | 🔴 Critical / 🟠 High |
+| 12 | **Copilot Studio Config** | Memory Poisoning, API Version Drift | 🔴 Critical |
+| 13 | **Data Cloud Grounding** | RAG Without Schema Classification | 🔴 Critical |
+| 14 | **Slack Integration** | Slack Bot Without DLP Guard | 🟠 High |
+| 15 | **External Service Security** | Certificate Pinning, Dynamic Cloaking RAG | 🟠 High |
+| 16 | **Custom Permission** | Agent Action Without Permission Gate | 🟠 High |
+| 17 | **Commerce** | Idempotency Key, Amount Bounds Check | 🔴 Critical |
+| 18 | **Multi-Agent Orchestration** | Compositional Fragment Trap, Sybil Identity | 🔴 Critical / 🟠 High |
+| 19 | **Platform Event / CDC** | Sub-agent Spawning Loop, CDC Field Filter | 🔴 Critical / 🟠 High |
+| 20–24 | **OWASP LLM Top 10** | Excessive Agency, Data Exfil, SSRF, DoS, MCP Auth | 🔴 Critical / 🟠 High |
+| 30–34 | **Enterprise Graph** | PII Graph, Privilege Graph, Blast Radius, MCP Scope, XSS Graph | 🔴 Critical / 🟠 High |
 
 ---
 
@@ -132,7 +143,12 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 - `.agent` files
 - `.cls` (Apex classes)
 - `.trigger` (Apex triggers)
+- `.namedCredential-meta.xml`
+- `.connectedApp-meta.xml`
+- `.field-meta.xml`
+- `.aiEvaluationDefinition-meta.xml`
 - `schema.json`
+- LWC components (`.js` in `lwc/` dirs)
 
 ---
 
@@ -159,13 +175,13 @@ AI Coding Agent (Claude / Gemini / Copilot)
 ┌─────────────────────────┐      ┌─────────────────────┐
 │   squireinterp           │      │   sf agent test run  │
 │   Go Execution Engine    │      │   (Salesforce CLI)   │
-│   26 SAST Rules          │      │   → Testing Center   │
+│   51+ SAST Rules         │      │   → Testing Center   │
 └─────────────────────────┘      └─────────────────────┘
 ```
 
 The Testing Center bridge tools delegate to `squirex generate-tests`, which:
 1. Runs a capability scan (or reads existing SARIF)
-2. Converts violations to Agentforce DX test YAML (all 26 rules, normalized `AGENTFORCE-X.Y` IDs)
+2. Converts violations to Agentforce DX test YAML (all 51+ rules, normalized `AGENTFORCE-X.Y` IDs)
 3. Optionally validates and pushes to the Salesforce Testing Center via `sf agent test run`
 
 ---
@@ -180,7 +196,7 @@ The Testing Center bridge tools delegate to `squirex generate-tests`, which:
 
 ## GitHub App Integration
 
-For automated PR scanning, install the [SquireX GitHub App](https://github.com/apps/squirex) — one-click setup, 26-rule scan on every pull request, SARIF in your Security tab.
+For automated PR scanning, install the [SquireX GitHub App](https://github.com/apps/squirex) — one-click setup, 51+ rule scan on every pull request, SARIF in your Security tab.
 
 | Plan | Public Repos | Private Repos | Price |
 |------|-------------|---------------|-------|
