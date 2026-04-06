@@ -147,7 +147,10 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 - `.connectedApp-meta.xml`
 - `.field-meta.xml`
 - `.aiEvaluationDefinition-meta.xml`
+- `.flow-meta.xml`
 - `schema.json`
+- `sfdx-project.json`
+- `package.xml`
 - LWC components (`.js` in `lwc/` dirs)
 
 ---
