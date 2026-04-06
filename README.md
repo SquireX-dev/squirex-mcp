@@ -204,7 +204,8 @@ For automated PR scanning, install the [SquireX GitHub App](https://github.com/a
 | Plan | Public Repos | Private Repos | Price |
 |------|-------------|---------------|-------|
 | Free | Unlimited | — | $0 |
-| Enterprise | Unlimited | Unlimited | $1,000/repo/year |
+| Pro | Unlimited | 1 | $49/repo/month |
+| Enterprise | Unlimited | Unlimited | $299/org/month |
 
 ---
 
