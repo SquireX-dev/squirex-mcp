@@ -18,7 +18,7 @@ Salesforce Agentforce agents use LLMs to autonomously execute Apex, Flows, and e
 - 🔴 **Privilege Escalation** — Actions running in system context without sharing
 - 🟠 **Supply Chain** — Stale API versions that silently skip metadata types
 
-SquireX scans your Agentforce metadata with **51+ SAST rules across 19 categories** and integrates directly into your AI coding workflow.
+SquireX scans your Agentforce metadata with **61+ SAST rules across 27 categories** and integrates directly into your AI coding workflow.
 
 ---
 
@@ -52,7 +52,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `scan_agentforce` | Run all 51+ SAST rules against the project. Returns SARIF. |
+| `scan_agentforce` | Run all 61+ SAST rules against the project. Returns SARIF. |
 | `scan_agentforce_file` | Scan a single metadata file (`.genAiFunction-meta.xml`, `.agent`, etc.) |
 | `scan_agentforce_rule` | Run a specific rule (e.g., `AGENTFORCE-1.1`) |
 
@@ -60,7 +60,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 | Tool | Description |
 |------|-------------|
-| `list_scan_rules` | List all 51+ rules with ID, category, severity |
+| `list_scan_rules` | List all 61+ rules with ID, category, severity |
 | `get_rule_details` | Deep dive: description + remediation guidance |
 | `explain_violation` | Root-cause analysis for a specific violation |
 | `suggest_fix` | Generate a code/metadata fix suggestion |
@@ -106,7 +106,7 @@ That's it. Your AI agent now has access to the Agentforce Capability Scanner.
 
 ---
 
-## Agentforce Capability Scanner — 51+ Rules
+## Agentforce Capability Scanner — 61+ Rules
 
 | # | Category | Rules | Severity |
 |---|----------|-------|----------|
@@ -178,13 +178,13 @@ AI Coding Agent (Claude / Gemini / Copilot)
 ┌─────────────────────────┐      ┌─────────────────────┐
 │   squireinterp           │      │   sf agent test run  │
 │   Go Execution Engine    │      │   (Salesforce CLI)   │
-│   51+ SAST Rules         │      │   → Testing Center   │
+│   61+ SAST Rules         │      │   → Testing Center   │
 └─────────────────────────┘      └─────────────────────┘
 ```
 
 The Testing Center bridge tools delegate to `squirex generate-tests`, which:
 1. Runs a capability scan (or reads existing SARIF)
-2. Converts violations to Agentforce DX test YAML (all 51+ rules, normalized `AGENTFORCE-X.Y` IDs)
+2. Converts violations to Agentforce DX test YAML (all 61+ rules, normalized `AGENTFORCE-X.Y` IDs)
 3. Optionally validates and pushes to the Salesforce Testing Center via `sf agent test run`
 
 ---
